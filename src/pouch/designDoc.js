@@ -38,12 +38,14 @@ const asins = {
       }.toString(),
       reduce: '_count'
     },
-    by_domain: function (doc) {
+    by_domain: {
+      map: function (doc) {
       if (doc.type === 'asins') {
         emit(doc.attributes.domain, doc._id);    
       }
     }.toString(),
-    reduce: '_count'
+      reduce: '_count'
+    }
   },
   language: 'javascript',
 }
