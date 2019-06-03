@@ -67,11 +67,50 @@ const users = async (id) => {
   return await fetch_builder('users', params, [])
 }
 
+const recursiveRequest = async (params, cb) => {
+
+  params = getKeySet(params)
+  let temp_params = JSON.parse(JSON.stringify(params))
+  delete temp_params.results
+  delete temp_params.headless
+
+  if (params.limit >= 100) {
+
+    params.limit = params.limit - 100
+    temp_params.limit = 100
+    const data = await cb(temp_params)
+    params.results = params.results.concat(data)
+    await recursiveRequest(params, cb)
+
+  } else if (params.limit !== 0 ) {
+
+    const data = await cb(temp_params)
+    params.results = params.results.concat(data)
+    return params.results
+  }
+
+  return params.results
+}
+
+const getKeySet = (params) => {
+  if (!params.results) params.results = []
+  if (params.results.length > 0) {
+    params.sort.split(',').forEach(keyset => {
+      const last_result = params.results[params.results.length - 1]
+      const key = keyset.replace('-', '')
+      params[`keyset[${key}]`] = (key === 'id') ? last_result.id : last_result.attributes[key]
+    })
+  }
+  return params
+}
+
+
 export {
   grabs,
   items,
   itineraries,
   locations,
   offers,
-  users
+  users,
+  recursiveRequest
 }
