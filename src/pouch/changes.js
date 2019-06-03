@@ -23,7 +23,7 @@ const updatedAsinAttributes = async (change) => {
 
       const old_docs = await db.allDocs({include_docs: true})
 
-      const new_docs = old_docs
+      const new_docs = old_docs.rows
       .filter(doc => doc.doc.type === 'grabs' && doc.doc.relationships.asin.data.id === change.doc.id)
       .map(doc => {
         merge(doc.doc.relationships.asin.data.attributes, change.doc.attributes)
@@ -44,7 +44,7 @@ const updatedPricingAttributes = async (change) => {
 
       const old_docs = await db.allDocs({include_docs: true})
 
-      const old_doc = find(old_docs, {type: 'grabs', id: change.doc.id})
+      const old_doc = find(old_docs.rows, {type: 'grabs', id: change.doc.id})
 
       if (old_doc) {
 

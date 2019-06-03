@@ -37,7 +37,7 @@ const dbInit = async () => {
       })
     }    
   } catch (error) {
-    console.log('error at PouchDB on created', error)
+    console.error('error at PouchDB on created', error)
   }
 }
 
@@ -61,7 +61,7 @@ const asinIsMissing = async () => {
 
   } catch(error) {
 
-    console.log('Error at pouch.getUnparsedAsins()', error)
+    console.error('Error at pouch.getUnparsedAsins()', error)
   }
 }
 
@@ -92,7 +92,7 @@ const asinAttributeIsNull = async (attribute) => {
     }
 
   } catch (error) {
-    console.log('Error at pouch.asinAttributeIsNull()', error)
+    console.error('Error at pouch.asinAttributeIsNull()', error)
   }
 }
 
@@ -107,7 +107,7 @@ const amazonPricingIsMissing = async () => {
 
   } catch (error) {
     
-    console.log('Error at pouch.amazonPricingIsMissing()', error)
+    console.error('Error at pouch.amazonPricingIsMissing()', error)
   }
 }
 
@@ -127,7 +127,7 @@ const amazonPricingIsNull = async () => {
 
   } catch (error) {
     
-    console.log('Error at pouch.amazonPricingIsNull()', error)
+    console.error('Error at pouch.amazonPricingIsNull()', error)
   }
 }
 
